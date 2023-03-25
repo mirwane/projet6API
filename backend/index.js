@@ -8,7 +8,7 @@ const port = 3000;
 require("./mongo");
 
 // Controllers
-const { createUser, logUser } = require("./user");
+const { createUser } = require("./users");
 
 // Middleware
 app.use(cors());
@@ -16,7 +16,9 @@ app.use(express.json());
 
 // Routes
 app.post("/api/auth/signup", createUser);
-app.post("/api/auth/login", logUser);
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 // Listen
-app.listen(port, () => console.log(`port http://localhost:${port}`));
+app.listen(port, () => console.log("listening on port " + port));
