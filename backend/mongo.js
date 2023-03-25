@@ -10,8 +10,8 @@ mongoose
   .catch((err) => console.error("erreur MongoDB", err));
 
 const userSchema = new mongoose.Schema({
-  email: String,
-  password: String,
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
 });
 
 const User = mongoose.model("User", userSchema);

@@ -21,4 +21,8 @@ function hashPassword(password) {
   return bcrypt.hash(password, saltRounds);
 }
 
-module.exports = { createUser };
+function logUser(req, res) {
+  const { email, password } = req.body;
+}
+
+module.exports = { createUser, logUser };
