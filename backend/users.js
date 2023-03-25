@@ -5,15 +5,15 @@ async function createUser(req, res) {
   const { email, password } = req.body;
 
   const hashedPassword = await hashPassword(password);
-  console.log("password: ", password);
-  console.log("hashedPassword: ", hashedPassword);
 
   const user = new User({ email, password: hashedPassword });
 
   user
     .save()
-    .then(() => res.send("utilisateur enregistré"))
-    .catch((err) => console.log("utilisateur non enregistré", err));
+    .then(() => res.status(201).send("utilisateur enregistré"))
+    .catch((err) =>
+      res.status(409).send({ message: "utilisateur non enregistré : " + err })
+    );
 }
 
 function hashPassword(password) {
