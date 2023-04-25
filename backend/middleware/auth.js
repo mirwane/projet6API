@@ -1,13 +1,12 @@
 const jwt = require("jsonwebtoken");
 
 function authentificatUser(req, res, next) {
-  console.log("authentificatUser");
   const header = req.header("Authorization");
-  const token = header.split(" ")[1];
   if (!header) {
     return res.status(403).send({ message: "header absent" });
   }
 
+  const token = header.split(" ")[1];
   if (!token) {
     return res.status(403).send({ message: "token absent" });
   }
