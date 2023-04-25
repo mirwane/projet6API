@@ -3,12 +3,12 @@ const { getSauce, sendClientResponse } = require("./sauces");
 function likeSauces(req, res) {
   const { like, userId } = req.body;
   if (![1, -1, 0].includes(like))
-    return res.status(403).send({ message: "invalid" });
+    return res.status(403).send({ message: "Invalid like value" });
 
   getSauce(req, res)
     .then((product) => updateVote(product, like, userId, res))
-    .then((pro) => pro.save())
-    .then((prod = sendClientResponse(prod, res)))
+    .then((pr) => pr.save())
+    .then((prod) => sendClientResponse(prod, res))
     .catch((err) => res.status(500).send(err));
 }
 

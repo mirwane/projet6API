@@ -60,18 +60,14 @@ function modifySauce(req, res) {
 
 function deleteImage(product) {
   if (product == null) return;
-  console.log("DELETE IMAGE", product);
   const imageToDelete = product.imageUrl.split("/").at(-1);
   return unlink("images/" + imageToDelete);
 }
 
 function makePayload(hasNewImage, req) {
-  console.log("hasNewImage:", hasNewImage);
   if (!hasNewImage) return req.body;
-  const payload = JSON.parse(req.body.saute);
+  const payload = JSON.parse(req.body.sauce);
   payload.imageUrl = makeImageUrl(req, req.file.fileName);
-  console.log("NOUVELLE IMAGE A GERER");
-  console.log("voici le payload:", payload);
   return payload;
 }
 
@@ -84,15 +80,15 @@ function sendClientResponse(product, res) {
   return Promise.resolve(res.status(200).send(product)).then(() => product);
 }
 
-function makeImageURL(req, file) {
-  return req.protocol + "://" + req.get("host") + "/images/" + file.filename;
+function makeImageUrl(req, fileName) {
+  return req.protocol + "://" + req.get("host") + "/images/" + fileName;
 }
 
 function createSauces(req, res) {
   const { body, file } = req;
   const { fileName } = file;
-  const saute = JSON.parse(body.saute);
-  const { name, manufacturer, description, mainPepper, heat, userId } = saute;
+  const sauce = JSON.parse(body.sauce);
+  const { name, manufacturer, description, mainPepper, heat, userId } = sauce;
 
   const product = new Product({
     userId: userId,
@@ -114,8 +110,8 @@ function createSauces(req, res) {
 }
 
 module.exports = {
-  getSauces,
   getSauce,
+  getSauces,
   sendClientResponse,
   getSauceById,
   createSauces,

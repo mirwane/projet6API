@@ -11,9 +11,8 @@ function authentificatUser(req, res, next) {
     return res.status(403).send({ message: "token absent" });
   }
 
-  jwt.verify(token, process.env.JWT_PASS, (err, decoded) => {
+  jwt.verify(token, process.env.JWT_PASSWORD, (err, decoded) => {
     if (err) return res.status(403).send({ message: "token invalid" + err });
-    console.log("token valid");
     next();
   });
 }
