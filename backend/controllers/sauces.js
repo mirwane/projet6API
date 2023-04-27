@@ -127,29 +127,29 @@ function updateVote(product, like, userId, res) {
 }
 
 function resetVote(product, userId, res) {
-  const { userLiked, userDisliked } = product;
-  if ([userLiked, userDisliked].every((arr) => arr.includes(userId)))
+  const { usersLiked, usersDisliked } = product;
+  if ([usersLiked, usersDisliked].every((arr) => arr.includes(userId)))
     return Promise.reject("User has voted");
 
-  if (![userLiked, userDisliked].some((arr) => arr.includes(userId)))
+  if (![usersLiked, usersDisliked].some((arr) => arr.includes(userId)))
     return Promise.reject("User has not voted");
 
-  if (userLiked.includes(userId)) {
+  if (usersLiked.includes(userId)) {
     --product.likes;
-    product.userLiked = product.userLiked.filter((id) => id !== userId);
+    product.usersLiked = product.usersLiked.filter((id) => id !== userId);
   } else {
     --product.dislikes;
-    product.userDisliked = product.userDisliked.filter((id) => id !== userId);
+    product.usersDisliked = product.usersDisliked.filter((id) => id !== userId);
   }
 
-  let arrayToUpdate = userLiked.includes(userId) ? userLiked : userDisliked;
+  let arrayToUpdate = usersLiked.includes(userId) ? usersLiked : usersDisliked;
   arrayToUpdate = arrayToUpdate.filter((id) => id !== userId);
   return product;
 }
 
 function incrementVote(product, userId, like) {
-  const { userLiked, userDisliked } = product;
-  const voteArray = like === 1 ? userLiked : userDisliked;
+  const { usersLiked, usersDisliked } = product;
+  const voteArray = like === 1 ? usersLiked : usersDisliked;
   if (voteArray.includes(userId)) return product;
   voteArray.push(userId);
 
